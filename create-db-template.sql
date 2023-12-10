@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS Funcionario
 ); 
 CREATE TABLE IF NOT EXISTS Hospedagem 
 ( 
- idHosp SERIAL,  
+ idHosp INTEGER,  
  dataHosp DATE NOT NULL,  
  dtPreSaida DATE NOT NULL,  
  cpfCliente CHARACTER(11),
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS Hospedagem
 ); 
 CREATE TABLE IF NOT EXISTS Reserva 
 ( 
- idHosp SERIAL,  
+ idHosp INTEGER,  
  dtEntrada DATE NOT NULL,  
  status VARCHAR(10) NOT NULL,
  CONSTRAINT ReservaPK PRIMARY KEY (idHosp),
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS Reserva
 ); 
 CREATE TABLE IF NOT EXISTS Balcao 
 ( 
- idHosp SERIAL,  
+ idHosp INTEGER,  
  dtEntrada DATE NOT NULL,  
  comissao FLOAT(2),  
  cpfFunc CHARACTER(11),
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS Balcao
 ); 
 CREATE TABLE IF NOT EXISTS TipoQuarto 
 ( 
- idTipo SERIAL,  
+ idTipo INTEGER,  
  padrão VARCHAR(10) NOT NULL,  
  capacidade INT NOT NULL,  
  preço FLOAT(2) NOT NULL,  
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS Quarto
 ( 
  numQuarto INT,  
  andar VARCHAR(10) NOT NULL,  
- idTipo SERIAL,  
+ idTipo INTEGER,  
  cpfFunc CHARACTER(11),
  CONSTRAINT QuartoPK PRIMARY KEY(numQuarto),
  CONSTRAINT TipoFK Foreign Key (idTipo) 
@@ -72,8 +72,7 @@ CREATE TABLE IF NOT EXISTS Quarto
 ); 
 CREATE TABLE IF NOT EXISTS FormaPagamento 
 ( 
- código SERIAL,
- nome VARCHAR(100) NOT NULL,  
+ código INTEGER,  
  valor FLOAT(2) NOT NULL,  
  dtPgto DATE NOT NULL,
  CONSTRAINT CodigoPK PRIMARY KEY(código) 
@@ -82,7 +81,7 @@ CREATE TABLE IF NOT EXISTS FormaPagamento
 CREATE TABLE IF NOT EXISTS PIX 
 ( 
  cpfPagador CHARACTER(11),  
- codPgto SERIAL,
+ codPgto INTEGER,
  CONSTRAINT codPgtoPixPK PRIMARY KEY(codPgto), 
  CONSTRAINT cpfPagadorFK FOREIGN KEY(cpfPagador) 
  REFERENCES Cliente(cpf), 
@@ -92,7 +91,7 @@ CREATE TABLE IF NOT EXISTS PIX
 
 CREATE TABLE IF NOT EXISTS Cartão 
 ( 
- codPgto SERIAL,
+ codPgto INTEGER,
  CONSTRAINT codPgtoCartaoPK PRIMARY KEY(codPgto), 
  CONSTRAINT codPgtoFK FOREIGN KEY(codPgto) 
  REFERENCES FormaPagamento(código)
@@ -133,7 +132,7 @@ CREATE TABLE IF NOT EXISTS Produto
 
 CREATE TABLE IF NOT EXISTS Estoque 
 ( 
- idLote SERIAL,  
+ idLote INTEGER,  
  nome VARCHAR(100) NOT NULL,  
  dtForne DATE NOT NULL,  
  dtVal DATE NOT NULL ,  
@@ -144,8 +143,8 @@ CREATE TABLE IF NOT EXISTS Estoque
 ); 
 CREATE TABLE IF NOT EXISTS HospedagemUsaTipo 
 ( 
- idHosp SERIAL,  
- idTipo SERIAL,
+ idHosp INTEGER,  
+ idTipo INTEGER,
  CONSTRAINT idHospIdTipoPK PRIMARY KEY(idHosp,idTipo),
  CONSTRAINT idHospFK FOREIGN KEY(idHosp) 
  REFERENCES Hospedagem(idHosp),
@@ -155,9 +154,8 @@ CREATE TABLE IF NOT EXISTS HospedagemUsaTipo
 
 CREATE TABLE IF NOT EXISTS HospedagemPossuiPgto 
 ( 
- idHosp SERIAL,
- codPgto SERIAL,
- valor FLOAT(2) NOT NULL,
+ idHosp INTEGER,
+ codPgto INTEGER,
  CONSTRAINT idHospCodPgtoPK PRIMARY KEY(idHosp, codPgto),
  CONSTRAINT idHospFK FOREIGN KEY(idHosp) 
  REFERENCES Hospedagem(idHosp),
@@ -166,9 +164,8 @@ CREATE TABLE IF NOT EXISTS HospedagemPossuiPgto
 ); 
 CREATE TABLE IF NOT EXISTS EstoqueTemProduto 
 ( 
- idLote SERIAL,
+ idLote INTEGER,
  codBarras VARCHAR(50),
- valor FLOAT(2) NOT NULL,
  CONSTRAINT idLoteCodBarrasPK PRIMARY KEY(idLote,codBarras),
  CONSTRAINT idLoteFK FOREIGN KEY(idLote)
  REFERENCES Estoque(idLote),
@@ -178,7 +175,7 @@ CREATE TABLE IF NOT EXISTS EstoqueTemProduto
 
 CREATE TABLE IF NOT EXISTS PagamentoPossuiCadastro 
 ( 
-    codPgto SERIAL,
+    codPgto INTEGER,
     numCartao VARCHAR(25),
     CONSTRAINT codPgtoNumCartaoPK PRIMARY KEY(codPgto, numCartao),
     CONSTRAINT codPgtoFK FOREIGN KEY(codPgto)
