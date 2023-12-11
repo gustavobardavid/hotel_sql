@@ -79,7 +79,6 @@ WHERE f.cpf IN (
     LIMIT 1
 );
 
-
 -- Esta consulta trará informações sobre os pagamentos que não estão associados a Pix nem cartão. Ou seja, foram pagos em dinheiro
 SELECT *
 FROM FormaPagamento fp
@@ -92,3 +91,22 @@ WHERE NOT EXISTS (
     FROM Cartão c
     WHERE c.codPgto = fp.código
 );
+
+-- Conjuntos
+--Encontrar os códigos de pagamento utilizados em PIX ou Cartão nas reservas
+
+SELECT codPgto
+FROM HospedagemPossuiPgto
+WHERE codPgto IN (SELECT codPgto FROM PIX)
+UNION
+SELECT codPgto
+FROM HospedagemPossuiPgto
+WHERE codPgto IN (SELECT codPgto FROM Cartão);
+
+-- Encontrar CNPJs de fornecedores sem produtos no estoque
+SELECT cnpj
+FROM Fornecedor
+EXCEPT
+SELECT cnpjForn
+FROM Produto
+WHERE codBarras IN (SELECT codBarras FROM EstoqueTemProduto);

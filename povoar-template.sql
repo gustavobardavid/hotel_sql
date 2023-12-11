@@ -92,9 +92,9 @@ VALUES ('12345678901234', '9115161711'),
 INSERT INTO Produto (codBarras, descricao, valorU, cnpjForn)
 VALUES ('ABCDE12345', 'Ovo', 1.00, '12345678901234'),
        ('FGHIC6789G', 'Café', 5.00, '98765432109876'),
-       ('BBCDE12345', 'Macarrão', 1.00, '12345678901234'),
+       ('BBCDE12345', 'Macarrão', 1.00, '53762432309671'),
        ('FGHIJ67890', 'Pão', 4.00, '98765432109876'),
-       ('SGQIJ67898', 'Cuscuz', 1.00, '98765432109876');
+       ('SGQIJ67898', 'Cuscuz', 1.00, '78765432109872');
        
 -- Populando a tabela Estoque
 INSERT INTO Estoque (idLote, nome, dtForne, dtVal, cpfFunc)
